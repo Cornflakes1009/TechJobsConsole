@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+
 
 namespace TechJobsConsole
 {
@@ -41,7 +43,7 @@ namespace TechJobsConsole
                     else
                     {
                         List<string> results = JobData.FindAll(columnChoice);
-
+                        results.Sort();
                         Console.WriteLine("\n*** All " + columnChoices[columnChoice] + " Values ***");
                         foreach (string item in results)
                         {
@@ -63,7 +65,9 @@ namespace TechJobsConsole
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        // searchResults = JobData.FindByValue(searchTerm);
+                        searchResults = JobData.FindByValue(searchTerm);
+                        // PrintJobs(searchResults);
                     }
                     else
                     {
@@ -101,6 +105,7 @@ namespace TechJobsConsole
 
                 string input = Console.ReadLine();
                 choiceIdx = int.Parse(input);
+                // Console.WriteLine(input); // added this line myself
 
                 if (choiceIdx < 0 || choiceIdx >= choiceKeys.Length)
                 {
@@ -118,7 +123,18 @@ namespace TechJobsConsole
 
         private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
-            Console.WriteLine("printJobs is not implemented yet");
+            if (someJobs.Count != 0)
+            {
+                foreach(var dict in someJobs)
+            {
+                foreach(KeyValuePair<string, string> key in dict)
+                {
+                    Console.WriteLine(key.Key.ToString() + ": " + key.Value.ToString());
+                }
+                Console.WriteLine("=====================================================================");
+            }
+            }
+            
         }
     }
 }
